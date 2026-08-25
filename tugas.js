@@ -122,7 +122,14 @@ function aktifkanDragDrop() {
         e.preventDefault();
         const itemYangDipindahkan = document.querySelector(".dragging");
         const itemTujuan = e.target.closest(".tugas-item");
-        if (itemTujuan && itemYangDipindahkan !== itemTujuan) {
+        if (!itemTujuan || itemYangDipindahkan === itemTujuan) return;
+
+        const rect = itemTujuan.getBoundingClientRect();
+        const tengah = rect.top + rect.height / 2;
+
+        if (e.clientY > tengah) {
+            list.insertBefore(itemYangDipindahkan, itemTujuan.nextSibling);
+        } else {
             list.insertBefore(itemYangDipindahkan, itemTujuan);
         }
     });
